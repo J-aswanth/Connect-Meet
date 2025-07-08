@@ -1,9 +1,9 @@
 const express = require('express');
-const app = express();
-
 const session = require('express-session');
-
 const passport = require('passport');
+
+const app = express();
+// loads auth.js 
 require('./auth');
 
 function isLoggedIn(req, res, next) {
@@ -16,14 +16,17 @@ app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+// creates an http server using express
 const server = require('http').Server(app);
 const io = require('socket.io')(server, {
   transports: ['polling']
 });
 
 
-
+// generates unique ids for room ids
 const { v4: uuidV4 } = require('uuid');
+
 
 const { ExpressPeerServer } = require('peer');
 const peerServer = ExpressPeerServer(server, {
@@ -42,6 +45,7 @@ let ROOM_ID;
 // Rendering a new room on a new connection
 app.get('/', (req, res) => {
     ROOM_ID=uuidV4();
+
     if (req.user) {
         res.render(`index`, { ROOM_ID: ROOM_ID, username: req.user.displayName })
     } else
@@ -49,12 +53,13 @@ app.get('/', (req, res) => {
 })
 
   
-// app.listen(5000, () => console.log('listening on port: 5000'));
 
 // Rendering the requested room
+
 app.get('/:room', (req, res) => {
     ROOM_ID = req.params.room;
-    console.log(ROOM_ID);
+    //console.log(ROOM_ID);
+
     if (req.user) {
         //sending the room.ejs view
         console.log(req.user.displayName);
@@ -63,16 +68,22 @@ app.get('/:room', (req, res) => {
         res.render('not_login')
 })
 
+
 // On connecting to a new client
+
 io.on('connection', socket => {
+
     socket.on('join-room', (roomId, userId,username) => {
 
-        console.log(userId);
+        console.log(username);   
         socket.join(roomId);
+
         USER_LIST.push({roomId: roomId , userId : userId ,username : username})
         console.log(USER_LIST);
-        socket.broadcast.to(roomId).emit('user-connected', userId);
-        // socket.to(roomId).emit('user-connected', userId);
+
+        // to tell existing users that one guy joined 
+
+        socket.broadcast.to(roomId).emit('user-connected', username);
 
         // Sending a new message to common chat
         socket.on('sendMessage', (message) => {
@@ -87,13 +98,18 @@ io.on('connection', socket => {
     })
 })
 
+
 app.get('/auth/google/failure', (req, res) => {
     res.send('Failed to authenticate..');
-  });
+});
+
+// redirects user to google login page 
 
 app.get('/auth/google',
 passport.authenticate('google', { scope: [ 'email', 'profile' ],prompt: 'select_account' }
 ));
+
+// google redirects back here after login
 
 app.get( '/google/callback',
 passport.authenticate( 'google', {
