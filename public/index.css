@@ -126,27 +126,11 @@ input:focus {
   cursor: pointer;
 }
 
-/* GitHub */
-.git {
-  margin-top: 30px;
-  margin-left: 20px;
-}
 
-.github-link {
-  text-decoration: none;
-}
-
-.github-icon {
-  font-size: 60px;
-  color: black;
-}
-
-.github-text {
-  color: black;
-  margin-left: 5px;
-}
-
-/* Misc */
 .share-text {
   font-size: 30px;
 }
+
+
+
+
