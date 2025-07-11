@@ -58,7 +58,7 @@
             		</div>
 					
   
-					<div class="main_controls_button">
+					<div class="main_controls_button" onclick="toggleParticipants()">
 						<i class="fas fa-user-friends"></i>
 						<span class="remaining">participants</span>
 					</div>
@@ -72,12 +72,17 @@
 
 				<div class="main_controls_block">
 					<div onclick="leaveMeet()" class="main_controls_button">
-						<i class="fas fa-phone-slash" style="color: #f90606"></i>
+						<i class="fa-solid fa-person-running" style="color: #d71616; size: 30px;"></i>
 						<span class="leave_meeting" style="color: #d71616; size: 10px;">Leave meeting</span>
 					</div>
 				</div>
-
 			</div>
+
+			<div class="main_participants_panel" id="participants-panel" style="display:none;">
+  				<div class="main_header">PARTICIPANTS</div>
+  				<ul id="participants-list"></ul>
+			</div>
+
       	</div>
 
 		<div class="main_right">
@@ -106,6 +111,11 @@
 			//window.location.href = `/whiteboard/${roomID}`;
 			window.open(`/whiteboard/${roomID}`, "_blank");
         }
+
+		function toggleParticipants() {
+    		const panel = document.getElementById('participants-panel');
+    		panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+  		}
 
      	function copyRoomID() {
 			const roomID = "<%= roomId %>";
