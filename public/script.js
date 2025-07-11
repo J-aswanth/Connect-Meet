@@ -1,6 +1,6 @@
 // const { use } = require("passport");
 
-const socket = io();
+const socket = io('/');
 
 const videoGrid = document.getElementById('video-grid');
 
@@ -14,9 +14,8 @@ let myVideoStream;
 
 const peer = new Peer(undefined, {
     path: '/peerjs',
-    host: 'localhost',
+    host: '/',
     port: 5001,
-    secure: false
 });
 
 const peers = {}    
@@ -50,14 +49,16 @@ navigator.mediaDevices.getUserMedia({
         // when we recive their we add it to the UI
         call.on('stream', (userVideoStream) => {
             addVideoStream(video, userVideoStream);
-        })
-    })
+        });
+    });
 
     // Adding new users video stream
 
     socket.on('user-connected', (userId) => {
+        console.log('New user connected:', userId);
+        //connectToNewUser(userId, stream);
         setTimeout(connectToNewUser,500,userId, stream);
-    })
+    });
 
 })
 .catch((err) => console.log(err));
@@ -80,14 +81,14 @@ const connectToNewUser = (userId, stream) => {
     // when we recive their we add it to the UI
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream);
-    })
-
-    peers[userId] = call;
+    });
     
     // If connection closes (user leaves) then remove their stream
     call.on('close', () => {
         video.remove();
-    })
+    });
+
+    peers[userId] = call;
 }
 
 // Function to add new video 
@@ -109,7 +110,11 @@ $('html').keydown((e) => {
     if(e.which == 13 && text.val().length !== 0)
     {
         // sends the message to the server 
-        socket.emit('sendMessage', text.val());
+        socket.emit('sendMessage', {
+            user: USER_NAME,
+            message: text.val()
+        });
+
         // clears the input field after sending 
         text.val('');
     }
@@ -117,10 +122,10 @@ $('html').keydown((e) => {
 
 
 // recieving new messages 
-socket.on('addNewMessage', message => {
-    $('.messages').append(`<li class = "message" ><b>${USER_NAME}</b><br/>${message}</li>`);
+socket.on('addNewMessage', data => {
+    $('.messages').append(`<li class="message"><b>${data.user}</b><br/>${data.message}</li>`);
     scrollToBottom();
-})
+});
 
 // to keep chat at the bottom
 const scrollToBottom= ()=>{
@@ -181,4 +186,17 @@ function leaveMeet() {
     window.location.href = '/';
 }
 
+
+
+
+// Update participant list
+socket.on('update-user-list', userList => {
+    const ul = document.getElementById('participants-list');
+    ul.innerHTML = '';
+    userList.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user.username;
+        ul.appendChild(li);
+    });
+});
 
