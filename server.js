@@ -3,6 +3,8 @@ const session = require('express-session');
 const passport = require('passport');
 
 const app = express();
+
+
 // loads auth.js 
 require('./auth');
 
@@ -49,7 +51,7 @@ app.get('/', (req, res) => {
     if (req.user) {
         res.render(`index`, { ROOM_ID: ROOM_ID, username: req.user.displayName })
     } else
-        res.render('not_login')
+        res.render('home')
 })
 
   
@@ -57,6 +59,7 @@ app.get('/', (req, res) => {
 // Rendering the requested room
 
 app.get('/:room', (req, res) => {
+
     ROOM_ID = req.params.room;
     //console.log(ROOM_ID);
 
@@ -65,7 +68,7 @@ app.get('/:room', (req, res) => {
         console.log(req.user.displayName);
         res.render('room', { roomId: ROOM_ID, username: req.user.displayName })
     } else
-        res.render('not_login')
+        res.render('home')
 })
 
 
@@ -83,25 +86,29 @@ io.on('connection', socket => {
 
         // to tell existing users that one guy joined 
 
-        socket.broadcast.to(roomId).emit('user-connected', username);
+        socket.broadcast.to(roomId).emit('user-connected', userId);
+
+        const updatedUsers = USER_LIST.filter(u => u.roomId === roomId);
+        io.to(roomId).emit('update-user-list', updatedUsers);
+
 
         // Sending a new message to common chat
-        socket.on('sendMessage', (message) => {
-            io.to(roomId).emit('addNewMessage', message);
-            // socket.broadcast.emit('receive', data)
-        })
+        socket.on('sendMessage', (data) => {
+            io.to(roomId).emit('addNewMessage', data);
+        });
+
 
         // On disconnecting
         socket.on('disconnect', () => {
+            USER_LIST = USER_LIST.filter(u => u.userId !== userId);
             socket.broadcast.to(roomId).emit('user-disconnected', userId);
+            const updated = USER_LIST.filter(u => u.roomId === roomId);
+            io.to(roomId).emit('update-user-list', updated);
         })
     })
 })
 
 
-app.get('/auth/google/failure', (req, res) => {
-    res.send('Failed to authenticate..');
-});
 
 // redirects user to google login page 
 
@@ -118,11 +125,54 @@ failureRedirect: '/auth/google/failure'
 })
 );
 
+app.get('/auth/google/failure', (req, res) => {
+    res.send('Failed to authenticate..');
+});
+
+
+
+
+let connections = [];
+// Ends here
+
+// WBC
+// let connections = []
+
+
+// whiteboard connection part
+
+io.on('connect' , (socket) => {
+  connections.push(socket);
+  console.log(`${socket.id} has connected`);
+
+  socket.on('draw' , (data) =>{
+      connections.forEach(con =>{
+          if(con.id !== socket.id){
+              con.emit('ondraw' , {x :data.x ,y: data.y})
+          }
+      })
+  })
+
+  socket.on('down' , (data) =>{
+      connections.forEach(con =>{
+          if(con.id!==socket.id){
+              con.emit('ondown', {x : data.x , y : data.y});
+          }
+      });
+  });
+
+  socket.on("disconnect" , (reason) => {
+      console.log(`${socket.id} is disconnected`);
+      connections = connections.filter((con) =>con.id != socket.id);
+  });
+});
+
 
 app.get('/whiteboard/:id', isLoggedIn,(req, res) => {
   const roomId = req.params.id;
   res.render('whiteboard', { roomId }); 
 });
+
 
 server.listen(process.env.PORT||5001)
 
