@@ -25,7 +25,7 @@ A real-time video conferencing web application that allows users to **create and
 
 ---
 
-## ⚙️ Getting Started
+
 
 ### ✅ Prerequisites
 - Node.js installed on your system
@@ -47,27 +47,41 @@ Set up Google OAuth credentials:
 - Enable the Google OAuth 2.0 API and get the client ID and client secret
 - Replace the placeholders for GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in server.js with your actual credentials
 
-## Usage
+## ⚙️ Getting Started
 
-Start the server:
+1. Start the server:
 ```
 npm start
 ```
 
-Open your web browser and navigate to:
+2. Open your web browser and navigate to:
 ```
 http://localhost:3000
 ```
 
-You will be redirected to the login page. Click on the "Sign in with Google" button to authenticate with your Google account.
+3. You will be redirected to the login page. Click on the "Sign in with Google" button to authenticate with your Google account.
 
-After successful authentication, you will be redirected to the home page.
+4. After successful authentication, you will be redirected to the home page.
 
-To start a new meeting, click on the "New Meeting" button.
+5. To start a new meeting, click on the "New Meeting" button.
 
-To join an existing meeting, enter the Room ID provided by the host in the "Enter Room ID" input field and click on the "Join Room" button.
+6. To join an existing meeting, enter the Room ID provided by the host in the "Enter Room ID" input field and click on the "Join Room" button.
 
-In the meeting room, you can mute/unmute your audio, stop/start your video, and use the chat feature to communicate with other participants.
+7. In the meeting room, you can mute/unmute your audio, stop/start your video, and use the chat feature to communicate with other participants.
 
-To leave the meeting, click on the "Leave" button or close the browser tab.
+8. To leave the meeting, click on the "Leave" button or close the browser tab.
 
+## Screenshots
+
+## 🙌 Acknowledgements
+This project is inspired by **Google Meet** and built as a learning exercise.  
+
+Special thanks to the creators and contributors of the **open-source libraries and frameworks** used in this project.  
+
+---
+
+## 📬 Contact
+For any queries or suggestions, feel free to reach out Malla Jaswanth:  
+
+- **Email**: mjashuvasu@gmail.com
+- **GitHub**: [[Your GitHub Profile](https://github.com/yourusername)  ](https://github.com/J-aswanth)
