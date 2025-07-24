@@ -1,22 +1,23 @@
-# 📹 Google Meet Clone
+# Google Meet Clone
 
 A real-time video conferencing web application that allows users to **create and join video meetings**, **chat with participants**, and **collaboratively draw on a whiteboard** in real time. Built using Node.js, Express.js, Passport.js for authentication, WebRTC for peer-to-peer video/audio streaming, and Socket.io for signaling and real-time communication. Styled with CSS for a clean UI.
 
 ---
 
-## ✅ Features
-- 🔐 **User authentication** using **Google OAuth 2.0**
-- 🆕 **Create a new meeting room**
-- 🔗 **Join an existing meeting room** using a Room ID
-- 🎥 **Video conferencing** with real-time audio and video streams
-- 🎤 **Mute/Unmute audio** during the meeting
-- 📷 **Start/Stop video** anytime
-- 💬 **Chat functionality** to send messages to participants
-- 🖌️ **Whiteboard feature** for collaborative drawing
+##  Features
+- **User authentication** using **Google OAuth 2.0**
+- **Create a new meeting room**
+- **Join an existing meeting room** using a Room ID
+- **Video conferencing** with real-time audio and video streams
+- **Mute/Unmute audio** during the meeting
+- **Start/Stop video** anytime
+- **Chat functionality** to send messages to participants
+- **Partcipants view** to see all participants 
+- **Whiteboard feature** for collaborative drawing
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
 - **Backend**: Node.js, Express.js
 - **Real-time Communication**: Socket.IO
 - **Authentication**: Passport.js with Google OAuth 2.0 API
@@ -27,13 +28,13 @@ A real-time video conferencing web application that allows users to **create and
 
 
 
-### ✅ Prerequisites
+### Prerequisites
 - Node.js installed on your system
 - Google OAuth 2.0 credentials
 
 ---
 
-### ✅ Installation
+### Installation
 
 1. **Clone the repository:**
  
@@ -47,7 +48,7 @@ Set up Google OAuth credentials:
 - Enable the Google OAuth 2.0 API and get the client ID and client secret
 - Replace the placeholders for GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in server.js with your actual credentials
 
-## ⚙️ Getting Started
+##  Getting Started
 
 1. Start the server:
 ```
@@ -73,15 +74,15 @@ http://localhost:3000
 
 ## Screenshots
 
-## 🙌 Acknowledgements
+## Acknowledgements
 This project is inspired by **Google Meet** and built as a learning exercise.  
 
 Special thanks to the creators and contributors of the **open-source libraries and frameworks** used in this project.  
 
 ---
 
-## 📬 Contact
+## Contact
 For any queries or suggestions, feel free to reach out Malla Jaswanth:  
 
 - **Email**: mjashuvasu@gmail.com
-- **GitHub**: [[Your GitHub Profile](https://github.com/yourusername)  ](https://github.com/J-aswanth)
+- **GitHub**: (https://github.com/J-aswanth)
