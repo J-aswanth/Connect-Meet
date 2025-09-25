@@ -1,4 +1,4 @@
-# Google Meet Clone
+# Connect Meet - Video Conferencing System
 
 A real-time video conferencing web application that allows users to **create and join video meetings**, **chat with participants**, and **collaboratively draw on a whiteboard** in real time. Built using Node.js, Express.js, Passport.js for authentication, WebRTC for peer-to-peer video/audio streaming, and Socket.io for signaling and real-time communication. Styled with CSS for a clean UI.
 
