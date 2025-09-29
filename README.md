@@ -74,9 +74,9 @@ http://localhost:3000
 
 ## Screenshots
 
-![Home Page](./app_overview/1.png)
-
 ![Home Page](./app_overview/2.png)
+
+![Home Page](./app_overview/1.png)
 
 ![Home Page](./app_overview/3.png)
 
